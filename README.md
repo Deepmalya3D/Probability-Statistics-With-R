@@ -1,1 +1,1 @@
-# Probability-Statistics-With-R
+# Probability and Statistics With R
