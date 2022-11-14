@@ -6,7 +6,7 @@ This is a Collaboratory hands on project in the 'Probability and Statistics with
 ## Collaborators
 ---
 > Deepmalya Dutta : [GitHub](https://github.com/Deepmalya3D)
-
+>
 > Varun Agrawal : [GitHub](https://github.com/vpagl)
-
+>
 > Sayantan Mondal : [GitHub](https://github.com/msayantanm)
