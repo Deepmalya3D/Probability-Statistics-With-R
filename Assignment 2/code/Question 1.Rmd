@@ -1,0 +1,167 @@
+---
+title: "Problem 1: Modelling number of goals scored"
+author: "Sayantan Mondal"
+header-includes:
+  \usepackage{fvextra}
+  \DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}
+output:
+  pdf_document: 
+    df_print: paged
+  html_document: default
+  word_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Suppose $X$ denote the number of goals scored by home team in premier league. We can assume $X$ is a random variable. Then we have to build the probability distribution to model the probability of number of goals. Since $X$ takes value in $\mathbb{N}=\{0,1,2,\cdots\}$, we can consider the geometric progression sequence as possible candidate model, i.e.,
+$$
+S=\{a,ar,ar^2,ar^{3},\cdots\}.
+$$
+But we have to be careful and put proper conditions in place and modify $S$ in such a way so that it becomes proper probability distributions.
+
+__Solution:-__  
+
+__(i)__  
+Considering the given geometric sequence as the base to create a probability distribution model, we can get a $Geom(1-r)$ distribution i.e, $P(X=x)=(1-r)r^x$. For the given $S$ the necessary conditions are $0<a,r<1$ and $a+r=1$.  
+
+__(ii)__  
+The mean and variance clearly exist as we know the same for $Geom(1-r)$. We will deduce the same below.  
+
+__(iii)__  
+\[ S_{1}=\mathbb{E}[X]=\sum_{x=0}^\infty xP(X=x)\]
+\newline
+\[ \mathbb{E}[X]=\sum_{x=0}^\infty x(1-r)r^x\]
+\newline
+\[ S_{1}=(1-r)[0+1.r+2.r^2+...]\]
+\newline
+\[ rS_{1}=(1-r)[0.r+1.r^2+2.r^3+...]\]
+
+Subtracting the two equations:-  
+
+\[ (1-r)S_{1}=(1-r)[r+r^2+r^3+...]\]
+\newline
+\[ S_{1}=\mathbb{E}[X]=\frac{r}{1-r}\]
+\newline
+
+Now we calculate $\mathbb{E}[X^2]$:-  
+
+\[ S_{2}=\mathbb{E}[X^2]=\sum_{x=0}^\infty x^2(1-r)r^x\]
+\newline
+\[ S_{2}=(1-r)[0+1.r+4.r^2+9.r^3+...]\]
+\newline
+\[ rS_{2}=(1-r)[0+r^2+4r^3+9r^4+...]\]
+\newline
+
+Subtracting the above 2 equations:-  
+
+\[ (1-r)S_{2}=(1-r)[r+3r^2+5r^3+7r^4+...]\]
+\newline
+
+Now let $S_{3}=r+3r^2+5r^3+7r^4+...$  
+
+\[ rS_{3}=r^2+3r^3+5r^4+7r^5+...\]
+\newline
+
+Now subtract the above 2 equations:-  
+
+\[ (1-r)S_{3}=r+2r^2+2r^3+2r^4+...\]
+\newline
+\[ (1-r)S_{3}=r+\frac{r^2}{1-r}\]
+
+Now substituting $(1-r)S_{3}$ into previous equation:-  
+
+\[ (1-r)S_{2}=r+\frac{r^2}{1-r}\]
+\newline
+\[ S_{2}=\frac{r+r^2}{(1-r)^2}\]
+\newline
+
+Now $Var(X)=\mathbb{E}[X^2]-(\mathbb{E}[X])^2$
+\newline
+\[ Var(X)=\frac{r+r^2}{(1-r)^2}-\frac{r^2}{(1-r)^2}\]
+\newline
+\[ Var(X)=\frac{r}{(1-r)^2}\]
+\newline
+
+__(iv)__  
+
+Clearly the given statistics doesn't seem to follow the Geometric distribution as assuming mean to be true results in variance to be incorrect and vice versa. So if we assume the mean to be true for our model i.e, $\mathbb{E}[X]=1.5$. So, $\mathbb{E}[X]=\frac{r}{1-r}=1.5$ gives us $r=0.6$.  
+
+__(a)__  
+
+\[ \mathbb{P}(X\geq1)=1-\mathbb{P}(X=0)\]
+\newline
+\[ =1-(1-r)\]
+\newline
+\[ =r=0.6\]  
+
+__(b)__  
+
+\[ \mathbb{P}(1\leq X<4)=\sum_{x=1}^3 \mathbb{P}(X=x)\]
+\newline
+\[ =\sum_{x=1}^3 (1-r)r^x\]
+\newline
+\[ =0.47\]
+
+__(v)__ 
+
+Using of the shelf Poisson distribution to model X, runs into the same issue, that the mean and variance is not equal. So likewise we model using mean as the parameter i.e, $\lambda=1.5$. Therefore $P(X=k)=\frac{e^{-1.5}\lambda^k}{k!}$.
+
+__(a)__  
+
+\[ \mathbb{P}(X\geq1)=1-\mathbb{P}(X=0)\]
+\newline
+\[ =1-e^{-\lambda}\]
+\newline
+\[ =r=0.77\]
+
+__(b)__  
+
+\[ \mathbb{P}(1\leq X<4)=\sum_{x=1}^3 \mathbb{P}(X=x)\]
+\newline
+\[ =\sum_{x=1}^3 \frac{e^{-1.5}\lambda^x}{x!}\]
+\newline
+\[ =0.758\]
+
+__(vi)__  
+
+Poisson would definitely be a better fit for the given model. Because of the two it has the least variance i.e, $1.5$. Also the mean, median and mode i.e, the central tendencies are closer to the expected values, so Poisson would definitely be the correct choice for the modelling.  
+
+__(vii)__  
+
+For $X$~$Geom(r)$ we have:-  
+\[ \mathcal{L}(r|x_1,x_2,x_3,...,x_n)=\prod_{i=1}^{n}(1-r)r^{x_i}\]
+\[ \mathcal{L}(r|x_1,x_2,x_3,...,x_n)=(1-r)[r^{x_1}.r^{x_2}.r^{x_3}...r^{x_n}]\]
+\[ \mathcal{L}(r|x_1,x_2,x_3,...,x_n)=(1-r)r^{\sum_{i=1}^n x_i}\]  
+
+\newline
+
+For $X$~$Poi(\lambda)$ we have:-  
+\[ \mathcal{L}(\lambda|x_1,x_2,x_3,...,x_n)=\prod_{i=1}^{n}\left(\frac{e^{-\lambda}\lambda^{k_i}}{k_i!}\right)\]
+\[ \mathcal{L}(\lambda|x_1,x_2,x_3,...,x_n)=\frac{e^{-\lambda}\lambda^{k_1}}{k_1!}\cdot\frac{e^{-\lambda}\lambda^{k_2}}{k_2}\cdot\frac{e^{-\lambda}\lambda^{k_3}}{k_3!}...\frac{e^{-\lambda}\lambda^{k_n}}{k_n!} \]
+\[ \mathcal{L}(\lambda|x_1,x_2,x_3,...,x_n)=\frac{e^{-n\lambda}\lambda^{\sum_{i=1}^n k_i}}{\prod_{i=1}^n k_i!}\]
+
+\newline
+
+The assumptions made are that the random variables are independent.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
