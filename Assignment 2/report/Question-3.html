@@ -386,15 +386,15 @@ Myopt1 &lt;- function(x,p,alfa,sigma1,mu,sigma2){
     return(est)
     }
   opt &lt;- optim(par = c(p,alfa,sigma1,mu,sigma2),control=list(maxit=10000), fn = est,x1 = x)
-  aic_1 &lt;- 10 + est(x1 = x,para = opt$par)
+  aic_1 &lt;- 10 + 2*est(x1 = x,para = opt$par)
   print(paste(&quot;AIC for model 1 = &quot;,aic_1))
   return(c(opt$par,aic_1))
 }
 p = length(waiting[waiting&lt;70])/length(waiting)
 MyFit &lt;- Myopt1(waiting,p,55,1,85,1)</code></pre>
-<pre><code>## [1] &quot;AIC for model 1 =  1043.09018997574&quot;</code></pre>
+<pre><code>## [1] &quot;AIC for model 1 =  2076.18037995149&quot;</code></pre>
 <pre class="r"><code>AIC_1 &lt;- Myopt1(waiting,p,55,1,85,1)[6]</code></pre>
-<pre><code>## [1] &quot;AIC for model 1 =  1043.09018997574&quot;</code></pre>
+<pre><code>## [1] &quot;AIC for model 1 =  2076.18037995149&quot;</code></pre>
 <pre class="r"><code>#Estimators
 phat &lt;- MyFit[1]
 alfahat &lt;- MyFit[2]
@@ -420,15 +420,15 @@ Myopt2 &lt;- function(x,p,alfa,sigma1,mu,sigma2){
     return(est)
     }
   opt &lt;- optim(par = c(p,alfa,sigma1,mu,sigma2),control=list(maxit=10000), fn = est,x1 = x)
-  aic_2 &lt;- 10 + est(x1 = x,para = opt$par)
+  aic_2 &lt;- 10 + 2*est(x1 = x,para = opt$par)
   print(paste(&quot;AIC for model 1 = &quot;,aic_2))
   return(c(opt$par,aic_2))
 }
 p = length(waiting[waiting&lt;70])/length(waiting)
 MyFit2 &lt;- Myopt2(waiting,p,55,1,85,1)</code></pre>
-<pre><code>## [1] &quot;AIC for model 1 =  1043.05826194754&quot;</code></pre>
+<pre><code>## [1] &quot;AIC for model 1 =  2076.11652389509&quot;</code></pre>
 <pre class="r"><code>AIC_2 &lt;- Myopt2(waiting,p,55,1,85,1)[6]</code></pre>
-<pre><code>## [1] &quot;AIC for model 1 =  1043.05826194754&quot;</code></pre>
+<pre><code>## [1] &quot;AIC for model 1 =  2076.11652389509&quot;</code></pre>
 <pre class="r"><code>#Estimators
 phat2 &lt;- MyFit2[1]
 alfahat2 &lt;- MyFit2[2]
@@ -452,15 +452,15 @@ Myopt3 &lt;- function(x,p,alfa,sigma1,mu,sigma2){
     return(est)
     }
   opt &lt;- optim(par = c(p,alfa,sigma1,mu,sigma2),control=list(maxit=10000), fn = est,x1 = x)
-  aic_3 &lt;- 10 + est(x1 = x,para = opt$par)
+  aic_3 &lt;- 10 + 2*est(x1 = x,para = opt$par)
   print(paste(&quot;AIC for model 1 = &quot;,aic_3))
   return(c(opt$par,aic_3))
 }
 p = length(waiting[waiting&lt;70])/length(waiting)
 MyFit3 &lt;- Myopt3(waiting,p,3.9,0.015,4.4,0.012)</code></pre>
-<pre><code>## [1] &quot;AIC for model 1 =  1042.71002177991&quot;</code></pre>
+<pre><code>## [1] &quot;AIC for model 1 =  2075.42004355982&quot;</code></pre>
 <pre class="r"><code>AIC_3 &lt;- Myopt3(waiting,p,3.9,0.015,4.4,0.012)[6]</code></pre>
-<pre><code>## [1] &quot;AIC for model 1 =  1042.71002177991&quot;</code></pre>
+<pre><code>## [1] &quot;AIC for model 1 =  2075.42004355982&quot;</code></pre>
 <pre class="r"><code>#Estimators
 phat3 &lt;- MyFit3[1]
 alfahat3 &lt;- MyFit3[2]
