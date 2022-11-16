@@ -45,7 +45,7 @@ Myopt1 <- function(x,p,alfa,sigma1,mu,sigma2){
     return(est)
     }
   opt <- optim(par = c(p,alfa,sigma1,mu,sigma2),control=list(maxit=10000), fn = est,x1 = x)
-  aic_1 <- 10 + est(x1 = x,para = opt$par)
+  aic_1 <- 10 + 2*est(x1 = x,para = opt$par)
   print(paste("AIC for model 1 = ",aic_1))
   return(c(opt$par,aic_1))
 }
@@ -82,7 +82,7 @@ Myopt2 <- function(x,p,alfa,sigma1,mu,sigma2){
     return(est)
     }
   opt <- optim(par = c(p,alfa,sigma1,mu,sigma2),control=list(maxit=10000), fn = est,x1 = x)
-  aic_2 <- 10 + est(x1 = x,para = opt$par)
+  aic_2 <- 10 + 2*est(x1 = x,para = opt$par)
   print(paste("AIC for model 1 = ",aic_2))
   return(c(opt$par,aic_2))
 }
@@ -115,7 +115,7 @@ Myopt3 <- function(x,p,alfa,sigma1,mu,sigma2){
     return(est)
     }
   opt <- optim(par = c(p,alfa,sigma1,mu,sigma2),control=list(maxit=10000), fn = est,x1 = x)
-  aic_3 <- 10 + est(x1 = x,para = opt$par)
+  aic_3 <- 10 + 2*est(x1 = x,para = opt$par)
   print(paste("AIC for model 1 = ",aic_3))
   return(c(opt$par,aic_3))
 }
