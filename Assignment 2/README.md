@@ -5,11 +5,11 @@ This is a Collaboratory hands on project in the 'Probability and Statistics with
 
 ## Collaborators
 ---
-> Deepmalya Dutta : [GitHub](https://github.com/Deepmalya3D)
+> Deepmalya Dutta `MDS202218` : [GitHub](https://github.com/Deepmalya3D)
 >
-> Varun Agrawal : [GitHub](https://github.com/vpagl)
+> Varun Agrawal `MDS202251` : [GitHub](https://github.com/vpagl)
 >
-> Sayantan Mondal : [GitHub](https://github.com/msayantanm)
+> Sayantan Mondal `MDS202231` : [GitHub](https://github.com/msayantanm)
 
 ## Description of the Problems
 ---
