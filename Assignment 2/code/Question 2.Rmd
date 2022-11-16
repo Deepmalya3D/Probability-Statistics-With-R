@@ -1,8 +1,8 @@
 ---
-title: "Qusetion2"
+title: "Question2"
 output:
-  html_document: default
   pdf_document: default
+  html_document: default
 date: "Varun Agrawal"
 ---
 
