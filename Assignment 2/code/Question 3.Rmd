@@ -1,5 +1,5 @@
 ---
-title: "Qusetion3"
+title: "Question3"
 output:
   html_document: default
   pdf_document: default
