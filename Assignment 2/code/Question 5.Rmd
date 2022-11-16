@@ -1,0 +1,126 @@
+---
+title: "Problem 5: Computational Finance - Modelling Stock prices"
+author: "Deepmalya Dutta"
+header-includes:
+  \usepackage{fvextra}
+  \DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}
+output:
+  pdf_document: 
+    df_print: paged
+  html_document: default
+  word_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+Following piece of code download the prices of TCS since 2007
+
+```{r, warning=FALSE}
+library(quantmod)
+getSymbols('TCS.NS')
+tail(TCS.NS)
+```
+Plot the adjusted close prices of TCS
+```{r}
+plot(TCS.NS$TCS.NS.Adjusted)
+```
+
+**Download the data of market index Nifty50**. The Nifty 50 index indicates how the over all market has done over the similar period.
+```{r, warning=FALSE}
+getSymbols('^NSEI')
+tail(NSEI)
+```
+Plot the adjusted close value of Nifty50
+```{r}
+plot(NSEI$NSEI.Adjusted)
+```
+
+
+### Log-Return 
+We calculate the daily log-return, where log-return is defined as
+$$
+r_t=\log(P_t)-\log(P_{t-1})=\Delta \log(P_t),
+$$
+where $P_t$ is the closing price of the stock on $t^{th}$ day.
+
+```{r}
+TCS_rt = diff(log(TCS.NS$TCS.NS.Adjusted))
+Nifty_rt = diff(log(NSEI$NSEI.Adjusted))
+retrn = cbind.xts(TCS_rt,Nifty_rt) 
+retrn = na.omit(data.frame(retrn))
+
+plot(retrn$NSEI.Adjusted,retrn$TCS.NS.Adjusted
+     ,pch=20
+     ,xlab='Market Return'
+     ,ylab='TCS Return'
+     ,xlim=c(-0.18,0.18)
+     ,ylim=c(-0.18,0.18))
+grid(col='grey',lty=1)
+```
+
++ Consider the following model:
+
+$$
+r_{t}^{TCS}=\alpha + \beta r_{t}^{Nifty} + \varepsilon,
+$$
+where $\mathbb{E}(\varepsilon)=0$ and $\mathbb{V}ar(\varepsilon)=\sigma^2$.
+
+1. Estimate the parameters of the models $\theta=(\alpha,\beta,\sigma)$ using the method of moments type plug-in estimator discussed in the class.
+
+```{r, warning = F}
+m_x <- mean(retrn$NSEI.Adjusted)
+m_y <- mean(retrn$TCS.NS.Adjusted)
+s_x <- sd(retrn$NSEI.Adjusted)
+s_y <- sd(retrn$TCS.NS.Adjusted)
+r <- cor(retrn$TCS.NS.Adjusted, retrn$NSEI.Adjusted)
+
+a0 <- m_y -r*s_y/s_x*m_x
+b0 <- r*s_y/s_x
+
+return <- retrn
+return$pred_TCS <- a0 + b0*return$NSEI.Adjusted
+e <- return$TCS.NS.Adjusted - return$pred_TCS
+sigma0 <- sd(e)
+
+print(c("The parameters of the model estimated using method of moments are:", paste("alpha = ", a0,", beta = ", b0, ", sigma =", sigma0)))
+```
+
+2. Estimate the parameters using the `lm` built-in function of `R`. Note that `lm` using the OLS method.
+```{r, warning = F}
+ols <- lm(TCS.NS.Adjusted~NSEI.Adjusted,data = retrn)
+a1 <- ols$coefficients[1]
+b1 <- ols$coefficients[2]
+sigma1 <- sd(ols$residuals)
+
+print(c("The parameters of the model estimated using `lm` built-in function of `R` are:", paste("alpha = ", a1,", beta = ", b1, ", sigma =", sigma1)))
+```
+3. Fill-up the following table
+
+Parameters | Method of Moments | OLS
+-----------|-------------------|-----
+$\alpha$   |                   |
+$\beta$    |                   |
+$\sigma$   |                   |
+
+#### Solution:
+
+Parameters |  Method of Moments     |       OLS
+-----------|------------------------|---------------------
+$\alpha$   |  0.000462823035007132  | 0.000462823035007131
+$\beta$    |  0.743684314730296     | 0.743684314730293
+$\sigma$   |  0.0161846620846538    | 0.0161846620846538
+
+
+4. If the current value of Nifty is 18000 and it goes up to 18200. The current value of TCS is Rs. 3200/-. How much you can expect TCS price to go up?
+
+```{r, warning = F}
+nifty_current <- 18000
+nifty_future <- 18200
+TCS_current <- 3200
+nifty_return <- log(nifty_future) - log(nifty_current)
+TCS_pred_return <- predict(ols, data.frame(NSEI.Adjusted = c(nifty_return)))
+print(paste("The TCS price would go up to", round(exp(TCS_pred_return)*TCS_current)))
+```
